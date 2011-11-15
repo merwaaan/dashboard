@@ -1,0 +1,22 @@
+.calendar_container table {
+
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.calendar_container .ui-datepicker-inline {
+
+	margin: auto;
+}
+
+.calendar_container #details {
+
+}
+
+.calendar_container #details .event {
+
+}
+
+.calendar_container #details .date {
+
+}

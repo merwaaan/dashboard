@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	 <title>Rapport</title>
+	 <meta charset="utf-8"/>
+	 <script src="jquery.js"></script>
+	 <style type="text/css">
+    </style>
+  </head>
+  <body>
+
+    <header>Merwan Achibet</header>
+
+    <h1>Modules</h1>
+
+    <h2>Carte</h2>
+
+    <p>On veut construire une application de visualisation
+    cartographique inspirée de Google Map. les fonctionnalités
+    attendues sont le déplacement à la souris, la possibilité de
+    zoomer, la possibilité de calculer des itinéraires entre deux
+    points clé.</p>
+
+    <h3>Affichage simple</h3>
+
+    <p>Pour commencer, on souhaite afficher simplement la carte à un
+    niveau de zoom quelconque. la technique présenté dans les cours a
+    été conservée et on utilise un bloc interne contenant
+    l'intégralité de la carte alors qu'un bloc externe sert de
+    cadre.</p>
+
+    <p>Dans le bloc interne contenant toutes les tiles de la carte,
+    on ajoute une image SVG des dimensions de la carte. Elle
+    contiendra les icônes des villes et les itinéraires calculés par
+    la suite. Afin de faciliter la manipulation d'image SVG, on
+    utilise la bibliothèque javascript <a href="">Raphael</a>. Les
+    coordonnées normalisées de chaque ville sont contenues dans une
+    liste. Pour ce TP, on choisit d'envisager les onze plus grandes
+    villes françaises ainsi que les autoroutes les reliant.</p>
+
+    <h3>Déplacement</h3>
+
+    <p>Pour gérer le déplacement sur la carte, on surveille les
+    événements de la souris mouseup et mousedown. Quand le bouton de
+    la souris est abaissé, on attache une fonction de déplacement à
+    l'événement mousemove. Quand le bouton de la souris est relevé,
+    on libère cet événement. Le fait de lier dynamiquement
+    l'événement de déplacement a pour avantage d'éviter au navigateur
+    d'avoir à traîter tous les déplacements de la souris et donc de
+    consommer des ressources.</p>
+
+    <p>La fonction de déplacement citée plus haut est chargée de
+    décaler la position des tiles (plus précisément du bloc les
+    contenant) en fonction du déplacement du curseur depuis son
+    dernier appel. Il faut vérifier à chacune de ces mises à jour
+    s'il n'est pas nécessaire de charger et d'afficher des tiles
+    nouvellement apparues à l'écran.</p>
+
+    <h3>Zoom</h3>
+
+    <p>On dispose de deux boutons ou de la molette de la souris pour
+    zoomer sur la carte. En surveillant le clic sur les boutons ou le
+    déroulement de la molette, il ne nous reste qu'à charger les
+    tiles du niveau correspondant.</p>
+
+    <p>Afin d'éviter un décalage progressif de la vue, on fait
+    attention à zoomer vers le centre de la vue, et non sur le coin
+    supérieur gauche de la carte. Pour ce faire, on calcule la
+    position normalisée du centre de la vue par rapport à la carte
+    entière (0 x 1, 0 y 1), et on se décale de la moitié de la taille
+    du viewport.</p>
+
+    <h3>Calcul d'itinéraire</h3>
+
+    <p>Les fonctions décrites précedemment prennent leurs fonctions
+    du côté client mais le calcul d'itinéraire se déroulera du côté du
+    serveur.</p>
+
+    <p>Sur chaque icône de ville, on lie l'événement de clic à
+    l'appel d'une fonction de construction de tracé. Si on clique sur
+    deux villes à la suite, une demande d'itinéraire est faite au
+    serveur. Au retour de la réponse, on trace un chemin sur la
+    surcouche SVG et on ajoute à la page une description écrite
+    comprenant les grandes étapes du trajet.</p>
+
+    <p>Le serveur Tomcat que nous utilisons contient la
+    bibliothèque <a href="">Graphstream</a>. Au démarrage du serveur,
+    on charge un fichier DGS représentant notre modèle. Pendant
+    l'utilisation du serveur, on utilisera l'algorithme de recherche
+    du plus court chemin de Dijkstra pour former nos trajets. La
+    réponse sera envoyée au client sous forme de JSON.</p>
+
+    <p>La requête émanant du serveur.</p>
+
+    <p></p>
+
+    <h2>Flux RSS</h2>
+
+    <h2>Recherche</h2>
+
+    <h2>Calendrier</h2>
+
+    <h1>Dashboard</h1>
+
+    <h2>Architecture commune</h2>
+
+    <h2>???</h2>
+
+  </body>
+</html>

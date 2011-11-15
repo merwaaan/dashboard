@@ -1,0 +1,117 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+* {
+
+	margin: 0;
+	padding: 0;
+}
+
+header {
+
+	background: #f9f5f4;
+	color: #F76842;
+	border-bottom: 3px solid #F76842;
+	font-family: Raleway;
+	font-size: 1.5em;
+	font-weight: bold;
+	letter-spacing: 0.3em;
+	padding: 0.5em;
+}
+
+ul#apps {
+
+	list-style-type: none;
+}
+
+ul#apps > li {
+
+	float: left;
+	margin: 2em;
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+}
+
+ul#apps .app_header {
+
+	font-size: 1em;
+	padding: 0.2em 0 0.2em 0.5em;
+	background-color: #f9f5f4;
+	color: #F76842;
+	border-left: 5px solid #F76842;
+	font-family: Raleway;
+	letter-spacing: 0.15em;
+}
+
+ul#apps .app_header h2 {
+
+	display: inline;
+}
+
+ul#apps .app_buttons, ul#max_app .app_buttons {
+
+	float: right;
+	font-size: 1.1em;
+	color: #F76842;
+}
+
+ul#apps .app_buttons span:hover, ul#max_app .app_buttons span:hover {
+
+	color: #34C7C2;
+	cursor: pointer;
+}
+
+ul#apps .app_content {
+
+	border: 1px solid #EEE;
+	border-top: none;
+	box-shadow: 2px 2px 10px #EEE;
+}
+
+ul#max_app {
+
+	list-style-type: none;
+}
+
+ul#max_app > li {
+
+	width: 90%;
+	margin: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	overflow: hidden;
+}
+
+ul#max_app .app_header {
+
+	font-size: 1em;
+	padding: 0.2em 0 0.2em 0.5em;
+	background-color: #f9f5f4;
+	color: #F76842;
+	border-left: 5px solid #F76842;
+	font-family: Raleway;
+	letter-spacing: 0.15em;
+}
+
+ul#max_app .app_header h2 {
+
+	display: inline;
+}
+
+ul#max_app .app_buttons {
+
+	float: right;
+	font-size: 1.3em;
+}
+
+ul#max_app .app_content {
+
+	border: 1px solid #EEE;
+	border-top: none;
+	box-shadow: 2px 2px 10px #EEE;
+}
+
+.ui-state-highlight {
+
+	border: 1px dashed #34C7C2 !important;
+}

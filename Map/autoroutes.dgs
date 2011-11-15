@@ -1,0 +1,37 @@
+DGS004
+autoroutes 0 0
+
+an Paris label:"Paris"
+an Marseille label:"Marseille"
+an Lyon label:"Lyon"
+an Toulouse label:"Toulouse"
+an Nice label:"Nice"
+an Nantes label:"Nantes"
+an Strasbourg label:"Strasbourg"
+an Montpellier label:"Montpellier"
+an Bordeaux label:"Bordeaux"
+an Lille label:"Lille"
+an Rennes label:"Rennes"
+an Reims label:"Reims"
+an LeHavre label:"Le Havre"
+an Caen label:"Caen"
+
+ae A1 Paris Lille weight:214
+ae A4-1 Paris Reims weight:144
+ae A4-2 Reims Strasbourg weight:346
+ae A6 Paris Lyon weight:455
+ae A7 Lyon Marseille weight:314
+ae A10 Paris Bordeaux weight:557
+ae A11 Paris Nantes weight:347
+ae A13-2 Paris LeHavre weight:225
+ae A62 Toulouse Bordeaux weight:234
+ae A89 Lyon Bordeaux weight:489
+ae A9 Marseille Montpellier weight:170
+ae A84 Caen Rennes weight:170
+ae A13-1 Caen LeHavre weight:95
+ae A61 Toulouse Montpellier weight:200
+ae A8 Marseille Nice weight:204
+ae N137 Nantes Rennes weight:107
+ae A26 Lille Reims weight:200
+ae A83 Nantes Bordeaux weight:246
+ae A29 LeHavre Lille weight:318

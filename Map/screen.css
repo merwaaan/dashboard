@@ -1,0 +1,83 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+.map_container h1 {
+    font: 20pt sans-serif;
+}
+
+.map_container #outerDiv {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    border: 1px solid grey;
+}
+
+.map_container #innerDiv {
+    position: relative;
+}
+
+.map_container #zoomIn, .map_container #zoomOut {
+    position: absolute;
+    left: 10px;
+    margin-bottom: 5px;
+    width: 30px;
+    background: white;
+    border: 3px solid #A8DBDB;
+    border-radius: 5px;
+	 z-index: 10000;
+}
+
+.map_container #zoomIn {
+	 top: 10px;
+}
+
+.map_container #zoomOut {
+	 top: 40px;
+}
+
+.map_container #zoomIn:hover, .map_container #zoomOut:hover {
+    cursor: pointer;
+    background: #0092FF;
+    color: white;
+}
+
+.map_container img#rose {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 10000;
+}
+
+.map_container img.tile {
+
+}
+
+.map_container img.city {
+
+	 z-index: 1000;
+}
+
+.map_container svg {
+
+    position: relative;
+    left: 0px;
+    top: 0px;
+	 z-index: 100;
+}
+
+.map_container #outerDiv {
+
+	float: left;
+}
+
+.map_container #descDiv {
+
+	float: right;
+	font-family: Raleway;
+	letter-spacing: 0.1em;
+}
+
+.map_container #descDiv ul {
+
+	list-style-type: square;
+	margin: 1em;
+}

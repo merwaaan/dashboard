@@ -1,0 +1,38 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+.rss_container {
+
+	padding: 1em;
+	background: white;
+	font-size: 0.8em;
+}
+
+.rss_container a {
+
+	color: black;
+	text-decoration : none;
+}
+
+.rss_container a:hover {
+
+	text-decoration : underline;
+}
+
+.rss_container a:visited {
+
+	color: grey;
+}
+
+.rss_container ul {
+
+	list-style-position: inside;
+	list-style-type: square;
+}
+
+.rss_container li {
+
+	font-family: Raleway;
+	font-weight: bold;
+	letter-spacing: 0.2em;
+	margin-bottom: 0.5em;
+}

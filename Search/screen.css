@@ -1,0 +1,33 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+.search_container {
+
+	padding: 1em;
+	text-align: center;
+	background: white;
+	font-size: 0.8em;
+}
+
+.search_container input{
+
+	text-align: left;
+	margin: 0.75em;
+	margin-bottom: 2em;
+}
+
+.search_container a:hover {
+
+	text-decoration : underline;
+}
+
+.search_container a:visited {
+
+	color: grey;
+}
+
+.search_container img {
+
+	margin: 2em;
+	width: 130px;
+	display: inline;
+}
