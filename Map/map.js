@@ -503,6 +503,9 @@ Map.prototype.onMaximize = function() {
 	this.resize(this.options.maxSize, this.options.maxSize);
 
 	this.descDiv = $('<div id="descDiv"></div>').appendTo(this.container);
+
+	this.updatePosition();
+	this.checkTiles();
 }
 
 Map.prototype.onMinimize = function() {
