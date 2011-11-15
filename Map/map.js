@@ -13,6 +13,9 @@ function Map(container, options) {
 	// Chemin renvoyé par le serveur.
 	this.path = null;
 
+	// Texte décrivant les étapes.
+	this.description = null;
+
 	this.dragging = false;
 	this.dragStartPos = {x: 0, y: 0};
 
@@ -292,8 +295,7 @@ Map.prototype.displayRoute = function(data) {
 	this.drawRoute(data);
 
 	// Décrit l'itinéraire si le bloc prévu à cet effet existe.
-	if(this.descDiv !== null)
-		this.writeRoute(data);
+	this.writeRoute(data);
 }
 
 Map.prototype.drawRoute = function(data) {
@@ -348,8 +350,12 @@ Map.prototype.writeRoute = function(data) {
 
 	desc += '</ul>';
 
-	this.descDiv.empty();
-	this.descDiv.append(desc);
+	this.description = desc;
+
+	if(this.descDiv !== null) {
+		this.descDiv.empty();
+		this.descDiv.append(desc);
+	}
 }
 
 Map.prototype.updatePosition = function() {
@@ -503,6 +509,7 @@ Map.prototype.onMaximize = function() {
 	this.resize(this.options.maxSize, this.options.maxSize);
 
 	this.descDiv = $('<div id="descDiv"></div>').appendTo(this.container);
+	this.descDiv.append(this.description);
 
 	this.updatePosition();
 	this.checkTiles();

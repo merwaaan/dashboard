@@ -81,3 +81,8 @@
 	list-style-type: square;
 	margin: 1em;
 }
+
+.map_container #descDiv li {
+
+	margin-bottom: 1em;
+}
