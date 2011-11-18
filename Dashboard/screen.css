@@ -30,7 +30,6 @@ ul#apps > li {
 	width: 300px;
 	height: 300px;
 	overflow: hidden;
-	box-shadow: 2px 2px 10px #EEE;
 }
 
 ul#apps .app_header {
@@ -63,7 +62,7 @@ ul#apps .app_buttons span:hover, ul#max_app .app_buttons span:hover {
 }
 
 ul#apps .app_content {
-
+	box-shadow: 2px 2px 10px #EEE;
 }
 
 ul#max_app {
