@@ -28,7 +28,7 @@ Search.prototype.search = function(keywords) {
 		return;
 
 	var url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURIComponent(keywords);
-	console.log(url);
+
 	$.ajax({
 		url: '/Proxy/get?url=' + encodeURIComponent(url),
 		dataType: 'json',

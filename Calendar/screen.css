@@ -1,3 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+.calendar_container {
+
+	font-family: Raleway;
+}
+
 .calendar_container table {
 
 	border-collapse: collapse;
@@ -9,14 +16,42 @@
 	margin: auto;
 }
 
+.calendar_container .ui-datepicker-inline a.ui-state-highlight {
+
+	border: 1px solid red;
+}
+
+.calendar_container .ui-datepicker-inline .important a {
+
+}
+
 .calendar_container #details {
 
+	padding: 1em;
+	list-style-position: inside;
+	list-style-type: none;
+}
+
+.calendar_container #details li {
+
+	font-family: Raleway;
+	font-weight: bold;
+	letter-spacing: 0.2em;
+	margin-bottom: 0.5em;
 }
 
 .calendar_container #details .event {
 
+	display: block;
+	color: #4FA1E8;
 }
 
 .calendar_container #details .date {
 
+	color: grey;
+}
+
+.calendar_container #details .place {
+
+	color: grey;
 }

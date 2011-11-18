@@ -5,19 +5,28 @@ function Calendar(container, options) {
 
 	this.container.addClass('calendar_container');
 
-	$.datepicker.setDefaults($.datepicker.regional['fr']);
-	this.container.datepicker();
+	this.displayLength = 0;
 
-	this.events = [];
+	this.events = null;
+
+	this.calendar = this.container.datepicker({
+		beforeShowDay: this.markEvent.bind(this),
+		onChangeMonthYear: this.changeMonth.bind(this)
+	});
 
 	this.list = $('<ul id="details"></ul>').appendTo(this.container);
 
 	this.load();
 }
 
-Calendar.prototype.load = function() {
+Calendar.prototype.load = function(year, month) {
 
-	var url = 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json&singleevents=true';
+	var today = year === undefined ? new Date() : new Date(year, month - 1, 1);
+
+	var firstDay = this.format(today);
+	var lastDay = this.format(new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+	var url = 'http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?strict=true&alt=json&singleevents=true&orderby=starttime&sortorder=a&start-min=' + firstDay + '&start-max=' + lastDay;
 
 	$.ajax({
 		url: '/Proxy/get?url=' + encodeURIComponent(url),
@@ -27,51 +36,90 @@ Calendar.prototype.load = function() {
 	});
 }
 
+Calendar.prototype.markEvent = function(date) {
+
+	if(this.events === null)
+		return [false, '', ''];
+
+	var dateRFC3239 = this.format(date);
+	var event = this.events[dateRFC3239];
+
+	if(event) {
+
+		return [true, 'important', event.title.$t];
+	}
+
+	return [false, '', ''];
+}
+
+Calendar.prototype.changeMonth = function(year, month, instance) {
+
+	$('#details').empty();
+	this.load(year, month);
+}
+
 Calendar.prototype.record = function(data) {
 
-	this.events = data.feed.entry;
+	this.events = {};
 
-	this.events.sort(function(a, b) {
+	data.feed.entry.forEach(function(item) {
 
-		var dateA = a.gd$when[0].startTime;
-		var dateB = b.gd$when[0].startTime;
-//		console.log(dateA, 'vs', dateB, '->', dateA < dateB);
+		var date = item.gd$when[0].startTime.substr(0, 10);
+		this.events[date] = item;
+	}.bind(this));
 
-		return dateA < dateB;
-	});
-
+	this.container.datepicker('refresh');
 	this.display();
+}
+
+Calendar.prototype.format = function(date) {
+
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1);
+	var day = (date.getDate() < 10 ? '0' : '') + date.getDate();
+
+	return year + '-' + month + '-' + day;
 }
 
 Calendar.prototype.display = function() {
 
-	for(var i = 0; i < 10; ++i) {
+	$('#details').empty();
 
-		var event = this.events[i];
+	if(this.displayLength == 0)
+		return;
+
+	$.each(this.events, function(dateRFC3239, event) {
+
+		var date = new Date(Date.parse(event.gd$when[0].startTime));
+
 		var what = event.title.$t;
-		var when = new Date(Date.parse(event.gd$when[0].startTime));
+		var when = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 		var where = event.gd$where[0].valueString;
 
-		this.list.append('<li>' + when + ' //// ' + event.gd$when[0].startTime + '</li>');
-		//this.list.append('<li><span class="event">' + what + '</span><span class="date">' + when.getDay() + '/' + when.getMonth() + '/' + when.getFullYear() + '</span> @' + where + '</li>');
-	}
+		var eventElement = $('<li></li>').appendTo(this.list);
+		eventElement.append('<span class="event">' + what + '</span>');
+		eventElement.append('<span class="date">' + when + '</span>');
+		eventElement.append('<span class="place">@' + where + '</span>');
+	}.bind(this));
 }
 
 Calendar.prototype.onMaximize = function () {
 
-
+	this.displayLength = Infinity;
+	this.display();
 }
 
 Calendar.prototype.onMinimize = function () {
 
-
+	this.displayLength = 0;
+	this.display();
 }
 
 Calendar.prototype.dependencies = {
 	scripts: [
 		'jquery.js',
 		'jquery-ui.js',
-		'jquery.ui.datepicker-fr.js'
+		'jquery.ui.datepicker-fr2.js'
 	],
 	styles: [
 		'screen.css',

@@ -1,3 +1,10 @@
+/* TODO
+
+	- bug Map
+	- rapport
+
+*/
+
 $(function() {
 
 	$('#apps').sortable({
@@ -11,8 +18,8 @@ $(function() {
 	var dash = new Dashboard();
 	dash.load('Carte', 'map', {size: 300, maxSize: 600, resDir: '../Map/resources/'});
 	dash.load('Flux RSS', 'rss', {url: 'http://news.ycombinator.com/rss', length: 5, maxLength: 20});
-	dash.load('Recherche web', 'search', {length: 1, maxLength: 8});
-	dash.load('Calendrier', 'calendar');
+	dash.load('Recherche', 'search', {length: 1, maxLength: 8});
+	dash.load('Calendrier', 'calendar', {});
 });
 
 function Dashboard() {
@@ -95,12 +102,13 @@ Dashboard.prototype.loadModule = function(title, module, options) {
 
 	reduceButton.click(function() {
 
-		if(container.is(':visible'))
-			reduceButton.text('\u2193');
-		else
-			reduceButton.text('\u2191');
+		container.slideToggle(400, function() {
 
-		container.slideToggle();
+			if(container.is(':visible'))
+				reduceButton.text('\u2191');
+			else
+				reduceButton.text('\u2193');
+		});
 	});
 
 	maximizeButton.click(function() {
