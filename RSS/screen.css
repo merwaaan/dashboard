@@ -7,6 +7,12 @@
 	font-size: 0.8em;
 }
 
+.rss_container img.loading {
+
+	display: block;
+	margin: auto;
+}
+
 .rss_container a {
 
 	color: black;

@@ -1,10 +1,3 @@
-/* TODO
-
-	- bug Map
-	- rapport
-
-*/
-
 $(function() {
 
 	$('#apps').sortable({
@@ -13,7 +6,7 @@ $(function() {
 		cursor: 'move',
 		handle: '.app_header'
 	});
-	$('#apps').disableSelection();
+	//$('#apps').disableSelection();
 
 	var dash = new Dashboard();
 	dash.load('Carte', 'map', {size: 300, maxSize: 600, resDir: '../Map/resources/'});

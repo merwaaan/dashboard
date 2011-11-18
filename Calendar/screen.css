@@ -5,10 +5,11 @@
 	font-family: Raleway;
 }
 
-.calendar_container table {
+.calendar_container img.loading {
 
-	border-collapse: collapse;
-	width: 100%;
+	display: block;
+	margin: auto;
+	margin-top: 2em;
 }
 
 .calendar_container .ui-datepicker-inline {

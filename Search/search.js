@@ -5,8 +5,9 @@ function Search(container, options) {
 
 	this.container.addClass('search_container');
 
-	this.data = [];
 	this.displayLength = options.length;
+
+	this.data = [];
 
 	this.field = $('<input type="text"/>').appendTo(this.container);
 	this.button = $('<input type="submit" value="Go"/>').appendTo(this.container);
@@ -27,6 +28,12 @@ Search.prototype.search = function(keywords) {
 	if(this.field.val().length == 0)
 		return;
 
+	// Efface les résultats précédents.
+	$('ul img', this.container).detach();
+
+	// Ajoute une image de chargement.
+	$('<img src="loading.gif" class="loading" alt="Loading..."/>').insertAfter(this.button, this.container);
+
 	var url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURIComponent(keywords);
 
 	$.ajax({
@@ -39,7 +46,14 @@ Search.prototype.search = function(keywords) {
 
 Search.prototype.record = function(data) {
 
+	// Enregistre les résultats pour ne pas avoir à refaire la même
+	// requête en cas d'agrandissement/réduction de la fenêtre.
 	this.data = data.responseData.results;
+
+	// Retire l'image de chargement.
+	$('img.loading', this.container).detach();
+
+	// Affiche les résultats.
 	this.display();
 }
 

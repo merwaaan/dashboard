@@ -16,7 +16,6 @@ function Map(container, options) {
 	// Texte décrivant les étapes.
 	this.description = null;
 
-	this.dragging = false;
 	this.dragStartPos = {x: 0, y: 0};
 
 	// Position de la carte.
@@ -87,7 +86,6 @@ function Map(container, options) {
 
    // Spécifie les callbacks.
 	this.outerDiv.mousedown(this.startMove.bind(this));
-   $(document).mousemove(this.processMove.bind(this));
 	$(document).mouseup(this.stopMove.bind(this));
 
 	// Empêche la sélection le dragging des tiles.
@@ -113,8 +111,10 @@ function Map(container, options) {
 
 Map.prototype.startMove = function(event) {
 
-	// Active le drag et change la forme du curseur.
-   this.dragging = true;
+	// Active le dragging.
+   $(document).bind('mousemove', this.processMove.bind(this));
+
+	// Change la forme du curseur.
    document.body.style.cursor = 'move';
 
 	// Enregistre la position du curseur.
@@ -124,15 +124,14 @@ Map.prototype.startMove = function(event) {
 
 Map.prototype.stopMove = function(event) {
 
-	// Désactive le drag et réinitialise la forme du curseur.
-   this.dragging = false;
+	// Désactive le dragging.
+   $(document).unbind('mousemove');
+
+	// Réinitialise la forme du curseur.
    document.body.style.cursor = 'default';
 }
 
 Map.prototype.processMove = function(event) {
-
-   if(!this.dragging)
-		return false;
 
 	// Déplace la carte en fonction du déplacement de la souris depuis
 	// la dernière mise à jour.
@@ -150,7 +149,7 @@ Map.prototype.processMove = function(event) {
 
 Map.prototype.zoom = function(z) {
 
-	// On ne zoome pas plus que possible.
+	// Limite les niveaux de zoom.
 	if(this.zoomLevel + z < 0 || this.zoomLevel + z > 2)
 		return;
 
@@ -276,7 +275,7 @@ Map.prototype.computeRoute = function(from, to) {
 		url: '../Map/direction?from=' + from + '&to=' + to,
 		dataType: 'json',
 		success: this.displayRoute.bind(this),
-		error: function(xhr, status) { console.log('Erreur: Impossible de calculer l\'itinéraire (' + xhr + ')'); }
+		error: function(xhr, status) { console.log('Erreur: Impossible de calculer l\'itinéraire (', xhr.responseText ,')'); }
 	});
 }
 

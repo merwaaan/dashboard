@@ -22,8 +22,16 @@ function Calendar(container, options) {
 
 Calendar.prototype.load = function(year, month) {
 
+	// Cache le calendrier pendant la transition.
+	$('.ui-datepicker-inline', this.container).hide();
+
+	// Ajoute une image de chargement.
+	this.container.prepend('<img src="loading.gif" class="loading" alt="Loading..."/>');
+
+	// Si aucune date n'est donnée en paramètre, on prend celle du jour.
 	var today = year === undefined ? new Date() : new Date(year, month - 1, 1);
 
+	// Intervalle entre le premier et le dernier événement.
 	var firstDay = this.format(today);
 	var lastDay = this.format(new Date(today.getFullYear(), today.getMonth() + 1, 0));
 
@@ -60,6 +68,12 @@ Calendar.prototype.changeMonth = function(year, month, instance) {
 }
 
 Calendar.prototype.record = function(data) {
+
+	// Retire l'image de chargement.
+	$('img.loading', this.container).detach();
+
+	// Réaffiche le calendrier
+	$('.ui-datepicker-inline', this.container).show();
 
 	this.events = {};
 

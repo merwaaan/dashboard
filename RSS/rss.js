@@ -5,8 +5,9 @@ function RSS(container, options) {
 
 	this.container.addClass('rss_container');
 
-	this.data = [];
 	this.displayLength = options.length;
+
+	this.data = [];
 
 	this.list = $('<ul></ul>').appendTo(this.container);
 
@@ -14,6 +15,9 @@ function RSS(container, options) {
 }
 
 RSS.prototype.load = function() {
+
+	// Ajoute une image de chargement.
+	this.container.prepend('<img src="loading.gif" class="loading" alt="Loading..."/>');
 
 	$.ajax({
 		url: '../Proxy/get?url=http://news.ycombinator.com/rss',
@@ -35,6 +39,10 @@ RSS.prototype.record = function(data) {
 		this.data.push({url: url, title: title});
 	}.bind(this));
 
+	// Retire l'image de chargement.
+	$('img.loading', this.container).detach();
+
+	// Affiche les résultats.
 	this.display();
 }
 

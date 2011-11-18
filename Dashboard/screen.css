@@ -62,6 +62,8 @@ ul#apps .app_buttons span:hover, ul#max_app .app_buttons span:hover {
 }
 
 ul#apps .app_content {
+
+	overflow: hidden;
 	box-shadow: 2px 2px 10px #EEE;
 }
 

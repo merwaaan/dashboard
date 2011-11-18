@@ -15,17 +15,14 @@
 	margin-bottom: 2em;
 }
 
-.search_container a:hover {
+.search_container img.loading {
 
-	text-decoration : underline;
+	display: block;
+	margin: auto;
+	margin-bottom: 2em;
 }
 
-.search_container a:visited {
-
-	color: grey;
-}
-
-.search_container img {
+.search_container ul img {
 
 	margin: 2em;
 	width: 130px;
