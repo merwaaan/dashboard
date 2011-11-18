@@ -34,154 +34,210 @@
       color: black;
       text-decoration: underline;
       }
+      code {
+      background: lightgrey;
+      }
     </style>
   </head>
   <body>
 
-    <header>Merwan Achibet</header>
+    <h1>Les services</h1>
 
-    <h1>Modules</h1>
+    <h2>Navigation</h2>
 
-    <h2>Carte</h2>
+    <h3>Présentation</h3>
 
     <p>On veut construire une application de visualisation
-      cartographique inspirée de Google Map. les fonctionnalités
-      attendues sont le déplacement à la souris, le zoom et la possibilité de calculer des itinéraires entre deux
+      cartographique et de navigation inspirée de Google Map. Les fonctionnalités
+      attendues sont le déplacement à l'aide de la souris, le zoom et
+      la possibilité de calculer des itinéraires entre deux
       points clé.</p>
 
-    <h3>Affichage basique</h3>
+    <p>On conserve la technique présentée à l'occasion de ce TP. Un
+      bloc interne est utilisé pour contenir toutes les tiles formant
+      la carte. Ce dernier est contenu dans un bloc externe faisant
+      office de cadre grâce à la règle CSS <code>overflow: hidden</code>. On ajoute
+      en plus deux boutons + et - qui permettront de faire varier le
+      niveau de zoom ainsi qu'une liste non ordonnée qui accueillera la
+      description textuelle de l'itinéraire calculé par la suite.</p>
 
-    <p>Pour commencer, on souhaite afficher simplement la carte à un
-      niveau de zoom quelconque. la technique présenté dans les cours a
-      été conservée : on utilise un bloc interne contenant
-      l'intégralité de la carte. Ce bloc est lui-même contenu dans un
-      autre bloc servant de cadre (grâce à la règle CSS overflow: hidden).</p>
+    <img src="truc.jpg"/>
 
-    <p>Dans le bloc interne contenant toutes les tiles de la carte,
-      on ajoute une image SVG partageant les mêmes dimensions que la carte. Elle
-      contiendra les icônes des villes et un tracé représentant l'itinéraire calculé par
-      la suite. Afin de faciliter la manipulation d'image SVG, on
-      utilise la bibliothèque Javascript <a href="http://raphaeljs.com">Raphael</a>. Les
-      coordonnées normalisées de chaque ville sont contenues dans une
-      liste et une routine et chargée de positionner chaque icône correspondant.</p>
+    <h3>Dessin des villes et des itinéraires</h3>
 
-    <p>exemple</p>
+    <p>Afin de pouvoir améliorer l'aspect esthétique de cette
+      application, nous allons dessiner les villes et les itinéraires
+      calculés sur la carte. Pour ce faire, on ajoute à l'intérieur du
+      bloc interne une image SVG des mêmes dimensions que la
+      carte. C'est sur cette surcouche que nous dessinerons (en
+      utilisant la bibliothèque
+      Javascript <a href="http://raphaeljs.com"> Raphael</a> pour une
+      manipulation du SVG plus aisée). Puisque les tiles sont
+      contenues dans le même bloc que la surcouche SVG, tous les
+      éléments de la carte resteront superposés quelque soit sa position.</p>
 
-    <h3>Déplacement</h3>
+    <h3>Déplacement et zoom</h3>
 
     <p>Pour gérer le déplacement sur la carte, on surveille les
-      événements de la souris mouseup et mousedown. Quand le bouton de
-      la souris est abaissé, on attache une fonction de déplacement à
-      l'événement mousemove. Quand le bouton de la souris est relevé,
-      on libère cet événement. Le fait de lier dynamiquement
+      événements de la souris <code>mouseup</code>
+      et <code>mousedown</code>. A la détection de l'appui sur le
+      bouton de la souris, on attache une fonction de déplacement à
+      l'événement <code>mousemove</code>. Quand le bouton de la souris est relâché,
+      on libère cet événement (bind/unbind en JQuery). Le fait de lier dynamiquement
       l'événement de déplacement a pour avantage d'éviter au navigateur
-      d'avoir à traîter tous les déplacements de la souris et donc de
+      d'avoir à traîter tous les déplacements de la souris, même
+      lorsque le bouton n'est pas enfoncé, et donc de
       consommer inutilement des ressources.</p>
 
     <p>La fonction de déplacement citée plus haut est chargée de
       décaler la position des tiles (plus précisément du bloc les
-      contenant) en fonction du déplacement du curseur depuis son
+      contenant, ainsi que la surcouche SVG) en fonction du déplacement du curseur depuis son
       dernier appel. Il faut vérifier à chacune de ces mises à jour
       s'il n'est pas nécessaire de charger et d'afficher des tiles
-      nouvellement apparues à l'écran.</p>
+      nouvellement apparues à l'écran, par le biais de la fonction
+      <code>checkTiles()</code> fournie.</p>
 
-    <h3>Zoom</h3>
+    <p>Pour le zoom, on dispose de deux boutons + et -. On surveille
+      le clic sur chacun de ces éléments et, en cas d'interaction, on
+      fait varier le niveau de zoom. Plus précisément, cela revient à
+      effacer toutes les tiles présentes et à charger celles du niveau
+      inférieur ou supérieur.</p>
 
-    <p>On dispose de deux boutons ou de la molette de la souris pour
-      zoomer sur la carte. En surveillant le clic sur les boutons ou le
-      déroulement de la molette, il ne nous reste qu'à charger les
-      tiles du niveau correspondant.</p>
-
-    <p>Afin d'éviter un décalage progressif de la vue, on fait
-      attention à zoomer vers le centre de la vue, et non sur le coin
-      supérieur gauche de la carte. Pour ce faire, on calcule la
-      position normalisée du centre de la vue par rapport à la carte
-      entière (0 x 1, 0 y 1), puis on se décale de la moitié de la taille
-      du viewport vers le haut et la gauche.</p>
+    <p>Il est néanmoins important de zoomer vers le centre de la carte
+      pour éviter un décalage progressif de la vue vers le haut et la
+      gauche. Pour ce faire, on recalcule la position de la carte à
+      chaque zoom de telle façon que le centre de la vue reste
+      toujours le même point.</p>
 
     <h3>Calcul d'itinéraire</h3>
 
     <p>Le calcul d'un itinéraire se fera côté serveur mais il faut
       tout d'abord laisser au client la possibilité de sélectionner son
-      point de départ et son point d'arrivée. `A chaque icône de ville
-      précédemment placé on lie une fonction de sélection qui sera
-      appelé lors d'un clic sur la ville en question. Afin de
-      communiquer à l'utilisateur la sélection on anime l'icône
-      (toujours avec la bibliothèque Raphael). Une fois que deux
-      villes ont été sélectionnées, on peut transmettre notre requête au
-      serveur. Elle contiendra comme argument les noms des villes sélectionnées.</p>
+      point de départ et son point d'arrivée. A chaque icône de ville
+      placé sur la surcouche SVG, on lie une fonction de sélection qui sera
+      appelé lors d'un clic sur la ville en question. Une fois deux
+      villes différentes sélectionnées, on peut transmettre notre
+      requête AJAX au serveur. Elle contiendra comme arguments les
+      noms des deux villes sélectionnées. <code>http://ADRESSE/Map/direction?from=Lille&to=Marseille</code></p>
 
-    <p>Le serveur Tomcat que nous utilisons utilise la
-      bibliothèque
-      Java <a href="http://graphstream-project.org/">Graphstream</a>. Au
-      démarrage du serveur,
-      on charge un fichier DGS représentant notre modèle. Et à chaque
-      reqûete d'un client on éxécute une recherche de plus court chemin
-      par l'algorithme de Dijkstra. Le résultat est renvoyé au client
-      sous forme de JSON. En plus des noms de villes étapes, on
-      transmet le noms des routes empruntés et leur longueur.</p>
+    <p>La reqûete est ensuite réceptionnée par notre serveur
+      Tomcat. On utilise ici la bibliothèque
+      Java <a href="http://graphstream-project.org/">Graphstream</a>
+      pour représenter notre ensemble de villes ainsi que les routes
+      qui les relient. Au démarrage du serveur, un fichier DGS
+      représentant notre modèle est chargé. Il ne reste plus qu'à
+      effectuer une recherche de plus court chemin par l'algorithme
+      de Dijkstra entre les deux villes dont les noms ont été passés
+      en paramètres</p>
 
-    <p>exemple</p>
+    <p>Le plus court chemin de la ville A à la ville B est maintenant
+      présent du côté serveur, il nous reste à le convertir en données
+      exploitables par le client et à lui transmettre. On commence par
+      changer l'ordre du chemin calculé, puisque Dijkstra nous fournit un
+      chemin allant de B à A et non l'inverse. On va ensuite construire
+      une chaîne de caractères représentant le chemin au format
+      JSON. On ne passe pas uniquement les noms des villes étapes mais
+      aussi les noms des routes par lesquelles on passe ainsi que leur
+      longueur.</p>
 
-    <p>Une fois que le client reçoit la réponse du serveur, il ne lui
-      reste plus qu'à mettre en forme le texte de description et à
-      dessienr un tracé blabla</p>
+    <p>exemple de JSON</p>
 
-    <p>Le serveur Tomcat que nous utilisons contient la
-      bibliothèque <a href="">Graphstream</a>. Au démarrage du serveur,
-      on charge un fichier DGS représentant notre modèle. Pendant
-      l'utilisation du serveur, on utilisera l'algorithme de recherche
-      du plus court chemin de Dijkstra pour former nos trajets. La
-      réponse sera envoyée au client sous forme de JSON.</p>
+    <p>Le client peut dessiner le tracé de la meilleure route et
+      générer un texte décrivant les étapes principales de son
+      itinéraires grâce au résultat JSON retourné par le serveur.</p>
 
-    <h3>Amélioration</h3>
+    <h3>Améliorations possibles</h3>
 
-    <p>Améliorations envisageables : utilisation d'openmachin à la
-      place des tiles, mise en valeur des villes étapes, réception des
-      coordonnées des villes depuis le serveur blablaaaa</p>
+    <p>Plutôt que de découper nous même nos tiles à partir d'une image
+      haute résolution ou vectorielle, il serait avantageux d'utiliser
+      un service tel
+      que <a href="http://openstreetmap.org">OpenStreetMap</a>. Ce
+      projet libre rassemble des cartes du monde entier crées
+      collaborativement. Son interêt principal dans le cadre de ce
+      projet est qu'il met à disposition des développeurs un serveur
+      permettant d'accéder à n'importe quel tile à partir du moment ou
+      l'on connaît sa latitude, sa longitude et son niveau de zoom</p>
 
-    <h2>Flux RSS</h2>
+    <p>En l'état actuel du projet, le client connaît le nom de chaque
+      ville ainsi que sa position approximative (pour pouvoir la placer
+      sur la carte). Le serveur connaît quant à lui le nom des villes
+      ainsi que les distances qui les séparent (plus précisément, la
+      longueur des routes qui les relient). Il y a ici une
+      redondance puisque les noms sont présents à la fois du côté du
+      client et du côté du serveur. Il serait envisageable de
+      construire une modélisation plus précise du côté serveur : plutôt
+      que de ne renseigner que la distance entre les villes, on
+      pourrait aussi enregistrer leur position. par la même occasion, on
+      allégerait le serveur pour éliminer cette redondance. Au chargement de la
+      page, le client n'aura connaissance d'aucune donnée géographique
+      et effectuerait une requête pour que le serveur les lui envoie.</p>
 
-    <p>Le module de flux RSS sera très simple. Son travail est de
-      récupérer le flux de syndication d'un site quelconque et
-      d'afficher les résultats sous forme de liste.</p>
+    <h2>Affichage de flux RSS</h2>
+
+    <h3>Présentation</h3>
+
+    <p>Le module d'affichage de flux RSS esr minimaliste. Son travail est de
+      récupérer le canal de syndication du site
+      web <a href="http://news.ycombinator.com">Hacker News</a> et
+      d'en afficher le contenu.</p>
+
+    <h3>Proxy</h3>
 
     <p>Pour obtenir les informations à partir du site web, on accède
-      directement à l'URL du flux. Il sera au format XML et il nous sera
-      donc nécessaire de le convertir au format JSON pour bénéficier d'une
-      manipulation plus aisée.</p>
+      en théorie directement à l'URL du flux. Il est au format XML et
+      notre seul travail devrait uniquement être de le parser afin
+      d'en extraire les données qui nous intéressent. Malheureusement,
+      les choses ne sont pas si simples, et pour des raisons de
+      sécurité, il nous est impossible de les récupérer
+      directement. Nous allons donc passer par un proxy, sous forme
+      d'application Tomcat, qui servira d'intermédiaire entre le
+      client et la source du flux;</p>
 
-    <p>Malheureusement les choses ne sont pas si simples et pour des
-      raisons de sécurité il ne nous est pas possible d'accéder
-      directement au flux RSS. On crée donc une nouvelle application
-      Tomcat qui fera office de proxy et par laquelle on recevra toute
-      donnée provenant de l'éxtérieur. Cette application prend en
-      argument l'URL du contenu à récupérer.</p>
 
     <p>blabla</p>
 
-    <h3>Améliorations</h3>
+    <h3>Améliorations possibles</h3>
 
-    <p>Possibiltié de choisir la source car format unique, Possibilité
-      de naviguer, whatever</p>
+    <p>Dans l'optique d'améliorer ce service, on peut envisager de
+    laisser à l'utilisateur la possibilité de rentrer lui-même
+    l'adresse du flux RSS qu'il souhaite consulter. Il suffirait
+    d'ajouter à l'interface de cette application un champ de texte et
+    de modifier en conséquence l'URL fourni dans la requête. Tant que
+    le flux RSS existe, il ne devrait y avoir aucun problème de
+    compatibilité puisque les métadonnées principales d'un flux sont</p>
 
-    <h2>Recherche</h2>
+    <p>La présence d'un flux RSS peut parfois être cachée aux
+    utilisateurs novices et il n'est pas toujours évident d'en trouve
+    l'adresse exacte. On peut imaginer améliorer ce service en
+    permettant à l'utilisateur de préciser non pas l'adresse directe
+    du flux mais l'adresse de la page principale du site. Ce serait
+    alors à l'application Tomcat, qui sortirait alors du cadre du
+    simple proxy, de parcourir le code source de la page web pointée
+    et d'extraire les adresses pointées par d'éventuelles balises <code>link</code>.</p>
 
-    <p>On va créer un module qui permettra de rechercher des images sur
-      le web à partir de notre Dashboard. La présentation reste simple :
+    <h2>Recherche d'images</h2>
+
+    <h3>Présentation</h3>
+
+    <p>On souhaite créer un service permettant d'effectuer une
+      recherche d'images sur le web à partir de notre Dashboard. La présentation reste simple :
       un champ de texte nous permet d'entre un ou plusieurs mot-clé, un
       bouton permet de valider (la touche entrée provoque le même dsq),
       et une liste d'affichage.</p>
 
+    <h3></h3>
+
     <p>On utilise l'API Google de recherche blabla Proxy truc</p>
 
-    <h3>Améliorations</h3>
+    <h3>Améliorations possibles</h3>
 
     <p></p>
 
-    <h2>Calendrier</h2>
+    <h2>Affichage de calendrier</h2>
 
-    <p>On veut</p>
+    <h3>Présentation</h3>
+
+    <p></p>
 
     <p>Les données que nous utiliserons sont accessibles via le
       service Google Calendar. De la même façon que pour le flux RSS, nous passons par
@@ -193,7 +249,7 @@
       seront détaillés et à chaque changement de mois, on devra charger
       de nouvelles données blabla</p>
 
-    <h3>Améliorations</h3>
+    <h3>Améliorations possibles</h3>
 
     <p>Evénements récurrents, lien avec la map pour le lieu, etc</p>
 
@@ -204,28 +260,6 @@
       à la manière dont nous allons rassembler tous ces modules sur une
       même page.</p>
 
-    <h2>Architecture commune</h2>
-
-    <p>Les détails d'implémentations nous pas encore été évoqués mais si
-    l'on observe les fichiers sources on remarque que chaque
-    application à une structure similaire.</p>
-
-    <p>Premièrement, comme on a commencé à travailler sur des
-    applications Tomcat, on conserve la structure "une application,
-    un répertoire", ainsi chaque module restera isolé.</p>
-
-    <p>On conserve cette homogénéité dans la façon dont chaque
-    application est instanciée. Chacune d'elle est en fait un objet
-    Javascript dont le constructeur prend un argument un conteneur et
-    un hash Javascript contenant une liste d'options.</p>
-
-    <p>Dans le cadre de cet exercice, nous avons développé quatre
-    applications mais dans un environnement plus réaliste notre
-    dashboard devrait être capable d'en contenir plus. Il est donc
-    fortement déconseillé de mettre en dur dans la page HTML du
-    Dashboard les liens vers les fichiers Javascript de nos
-    applications ainsi que les feuilles de stylr associées. </p>
-
 	 <h2>Interface</h2>
 
 	 <p>On souhaite obtenir une interface similaire à iGoogle, ie une page rassemblant plusieurs applications. Chaque application sera contenu dans un bloc qui obéira à plusieurs règles.
@@ -235,7 +269,28 @@
 
 	 <p>Pour le déplacement on utilisera le module sortable de JQuery UI. Chacune des applications citées précedemment sera contenu dans une liste ul dont les </p>
 
-	 <p></p>
+    <h2>Architecture commune</h2>
+
+    <p>Les détails d'implémentations nous pas encore été évoqués mais si
+      l'on observe les fichiers sources on remarque que chaque
+      application à une structure similaire. Premièrement, comme on a commencé à travailler sur des
+      applications Tomcat, on conserve la structure "une application,
+      un répertoire" pour maintenir l'isolation de chaque module.</p>
+
+    <p>On conserve cette homogénéité dans la façon dont chaque
+      application est instanciée. Chacune d'elle est en fait un objet
+      Javascript dont le constructeur prend un argument un conteneur et
+      un hash Javascript contenant une liste d'options.</p>
+
+    <p>Dans le cadre de cet exercice, nous avons développé quatre
+      applications mais dans un environnement plus réaliste notre
+      dashboard devrait être capable d'en contenir plus. Il est donc
+      fortement déconseillé de mettre en dur dans la page HTML du
+      Dashboard les liens vers les fichiers Javascript de nos
+      applications ainsi que les feuilles de stylr associées. dependences </p>
+
+
+    <p><code>onMaximize</code><code>onMinimize</code></p>
 
   </body>
 </html>
