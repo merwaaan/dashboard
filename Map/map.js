@@ -100,12 +100,6 @@ function Map(container, options) {
 	this.zoomInButton.click(function(){ self.zoom(1); });
 	this.zoomOutButton = $('<input type="button" id="zoomOut" value="-"/>').appendTo(this.outerDiv);
 	this.zoomOutButton.click(function(){ self.zoom(-1); });
-	this.outerDiv.bind('mousewheel', function(event, delta) {
-		if(delta > 0)
-			self.zoom(1);
-		else
-			self.zoom(-1);
-	});
 
 	// Surcouche SVG.
 	this.svg = Raphael("innerDiv", this.imageSize[this.zoomLevel].w, this.imageSize[this.zoomLevel].h);
@@ -526,7 +520,6 @@ Map.prototype.onMinimize = function() {
 Map.prototype.dependencies = {
 	scripts: [
 		'jquery.js',
-		'jquery.mousewheel.js',
 		'raphael.js'
 	],
 	styles: [

@@ -1,5 +1,7 @@
-compile:
-	javac -cp WEB-INF/lib/*:$CLASSPATH -d WEB-INF/classes/ Map.java
+all: Map ImageTiler
 
-restart:
-	/usr/share/tomcat6/bin/shutdown.sh && /usr/share/tomcat6/bin/startup.sh
+Map: Map.java
+	javac -d WEB-INF/classes/ -cp "/home/merwan/dashboard/Map/WEB-INF/lib/*" Map.java
+
+ImageTiler: ImageTiler.java
+	javac ImageTiler.java
