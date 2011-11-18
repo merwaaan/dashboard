@@ -9,6 +9,7 @@ function Calendar(container, options) {
 
 	this.events = null;
 
+	$.datepicker.setDefaults($.datepicker.regional['fr']);
 	this.calendar = this.container.datepicker({
 		beforeShowDay: this.markEvent.bind(this),
 		onChangeMonthYear: this.changeMonth.bind(this)
@@ -119,7 +120,7 @@ Calendar.prototype.dependencies = {
 	scripts: [
 		'jquery.js',
 		'jquery-ui.js',
-		'jquery.ui.datepicker-fr2.js'
+		'jquery.ui.datepicker-fr.js'
 	],
 	styles: [
 		'screen.css',
