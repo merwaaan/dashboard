@@ -18,7 +18,7 @@
 
 .calendar_container .ui-datepicker-inline a.ui-state-highlight {
 
-	border: 1px solid red;
+	color: #F76842;
 }
 
 .calendar_container .ui-datepicker-inline .important a {
