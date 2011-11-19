@@ -1,0 +1,6 @@
+"bash install.sh" pour préparer l'utilisation du dashboard.
+
+Ce script va créer des liens symboliques entre le répertoire des
+applications Tomcat et les applications de ce projet. Il sera peut
+être nécessaire de changer la valeur de la variable TOMCAT_APPS
+selon votre installation de Tomcat.
