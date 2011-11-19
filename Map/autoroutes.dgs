@@ -1,6 +1,5 @@
 DGS004
 autoroutes 0 0
-
 an Paris label:"Paris"
 an Marseille label:"Marseille"
 an Lyon label:"Lyon"
@@ -15,7 +14,6 @@ an Rennes label:"Rennes"
 an Reims label:"Reims"
 an LeHavre label:"Le Havre"
 an Caen label:"Caen"
-
 ae A1 Paris Lille weight:214
 ae A4-1 Paris Reims weight:144
 ae A4-2 Reims Strasbourg weight:346

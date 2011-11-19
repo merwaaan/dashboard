@@ -79,7 +79,7 @@ public class Map extends HttpServlet {
 
 					String d = edges.get(i).getAttribute("weight").toString();
 					sb.append(",\"distance\":\"");
-					sb.append(d.substring(0, d.length()-2));
+					sb.append(d);
 					sb.append("\"");
 				}
 
