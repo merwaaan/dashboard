@@ -7,12 +7,16 @@ function Search(container, options) {
 
 	this.displayLength = options.length;
 
+	// Données récupérées par la requête AJAX.
 	this.data = [];
 
+	// Elements du formulaire de recherche.
 	this.field = $('<input type="text"/>').appendTo(this.container);
 	this.button = $('<input type="submit" value="Go"/>').appendTo(this.container);
 	this.results = $('<ul></ul>').appendTo(this.container) ;
 
+	// La recherche est lancée lors du clic sur le bouton ou à l'appui
+	// de la touche entrée.
 	this.button.click(function() {
 		this.search(this.field.val());
 	}.bind(this));

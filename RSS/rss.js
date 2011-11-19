@@ -7,6 +7,7 @@ function RSS(container, options) {
 
 	this.displayLength = options.length;
 
+	// Tableau contenant toutes les données du flux.
 	this.data = [];
 
 	this.list = $('<ul></ul>').appendTo(this.container);
@@ -29,6 +30,7 @@ RSS.prototype.load = function() {
 
 RSS.prototype.record = function(data) {
 
+	// Parse le XML.
 	var xmlDoc = $.parseXML(data);
 
 	$(xmlDoc).find('item').each(function(index, element) {
