@@ -8,6 +8,7 @@
       margin:0;
       padding: 0;
       }
+
       body {
       width: 50%;
       margin: auto;
@@ -15,30 +16,44 @@
       color: black;
       box-shadow: 0 0 30px grey;
       }
+
       h1 {
       color: #F76842;
       }
+
       h2 {
       color: #C75430;
       }
+
       h3 {
       color: #823722;
       }
+
       h1, h2, h3 {
       margin-bottom: 0.5em;
       }
+
       p {
       margin-bottom: 1em;
       }
+
       a {
       color: black;
       text-decoration: underline;
       }
-      code {
-      background: lightgrey;
-      }
       li {
       list-style-position: inside;
+      }
+
+      code, pre {
+      background: #FFF3F0;
+      color: #823722;
+      font-family: monospace;
+      }
+
+      pre {
+      margin: 1em;
+      padding: 1em;
       }
       img {
       width: 70%;
@@ -46,7 +61,7 @@
       margin: auto;
       margin-bottom: 1em;
       padding: 1em;
-      border: 1px solid #F76842;
+      border: 1px solid #ffd7cc;
       }
     </style>
   </head>
@@ -169,7 +184,7 @@
       l'occasion. Cette requête contiendra comme arguments les noms
       des deux villes sélectionnées.</p>
 
-    <p><code>http://ADRESSE/Map/direction?from=Lille&to=Marseille</code></p>
+    <pre>http://ADRESSE/Map/direction?from=Lille&to=Marseille</pre>
 
     <p>La reqûete est ensuite réceptionnée par notre serveur. On utilise la bibliothèque
       Java <a href="http://graphstream-project.org/">Graphstream</a>
@@ -179,16 +194,16 @@
       extrait :</p>
 
     <pre>
-      DGS004
-      autoroutes 0 0
-      an Paris label:"Paris"
-      an Marseille label:"Marseille"
-      an Lyon label:"Lyon"
-      ...
-      ae A6 Paris Lyon weight:455
-      ae A7 Lyon Marseille weight:314
-      ...
-      </pre>
+DGS004
+autoroutes 0 0
+an Paris label:"Paris"
+an Marseille label:"Marseille"
+an Lyon label:"Lyon"
+...
+ae A6 Paris Lyon weight:455
+ae A7 Lyon Marseille weight:314
+...
+    </pre>
 
     <p>La recherche du plus court chemin dans notre réseau est assurée
       par l'implémentation de l'algorithme de Dijkstra dans
@@ -200,7 +215,21 @@
       arpentées. Un exemple de réponse est visible ci-dessous :</p>
 
     <pre>
-[{"city":"Marseille","route":"A7","distance":"314"},{"city":"Lyon","route":"A6","distance":"455"},{"city":"Paris"}]
+[
+  {
+    "city":"Marseille",
+    "route":"A7",
+    "distance":"314"
+  },
+  {
+    "city":"Lyon",
+    "route":"A6",
+    "distance":"455"
+  },
+  {
+    "city":"Paris"
+  }
+]
     </pre>
 
     <p>A la réception de cette réponse, le client dessine le
@@ -262,7 +291,7 @@
     enregistre son contenu avant de le renvoyer client sous forme de
     texte. Par exemple, la requête que nous utilisons est</p>
 
-    <p><code>http://ADRESSE/Proxy/get&url=http://news.ycombinator.com/rss</code></p>
+    <pre>http://ADRESSE/Proxy/get&url=http://news.ycombinator.com/rss</pre>
 
     <p>Une fois que le client a reçu la réponse au format XML, il est
     nécessaire de la parser pour en extraire le contenu. A cette
@@ -271,16 +300,15 @@
     la fonction <code>find()</code> :</p>
 
     <pre>
-	   var xmlDoc = $.parseXML(xml);
+var xmlDoc = $.parseXML(xml);
 
-	   $(xmlDoc).find('item').each(function(index, element) {
+$(xmlDoc).find('item').each(function(index, element) {
 
-		var url = $(element).find('link').text();
-		var title = $(element).find('title').text();
+    var url = $(element).find('link').text();
+    var title = $(element).find('title').text();
 
-      this.list.append('&lt;a href="'+link+'"&gt;&lt;li&gt;+'title'+&lt;/a&gt;&lt;/li&gt;);
-	   }.bind(this));
-
+    this.list.append('&lt;li&gt;&lt;a href="'+link+'"&gt;'+title+'&lt;/a&gt;&lt;/li&gt;);
+}.bind(this));
     </pre>
 
     <h3>Améliorations possibles</h3>
@@ -325,7 +353,7 @@
       basique que l'on souhaite en faire. Il est néanmoins possible d'accéder à
       ses résultats de recherche en passant par l'URL que l'API emploie.</p>
 
-    <p><code>http://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&rsz=8&q=</code></p>
+    <pre>http://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&rsz=8&q=TERMES</pre>
 
     <p>On remarque plusieurs arguments :
       <ul>
@@ -344,7 +372,22 @@
       sont interdites. Le résultat de cet appel est sous forme de
       JSON.</p>
 
-    <p><pre>JSON</pre></p>
+    <pre>
+[
+...
+{
+  "GsearchResultClass":"GimageSearch",
+  "width":"406",
+  "height":"616",
+  "tbWidth":"90",
+  "tbHeight":"136",
+  "url":"http://i.annihil.us/u/prod/marvel//universe3zx/images/2/2e/Gwendeath01.jpg"
+  "titleNoFormatting":"Spider-Man (Peter Parker) - Marvel Universe"
+  "originalContextUrl":"http://marvel.com/universe/Spider-Man_(Peter_Parker)"
+}
+...
+]
+    </pre>
 
     <p>On en extrait l'adresse de l'image pour pouvoir la charger
       dans le document, et l'adresse de la page
@@ -379,7 +422,7 @@
     <p>Une fois encore, nous passerons par le serveur proxy pour
     récupérer des données au format JSON. L'URL à appeler est :</p>
 
-    <p><code>http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json&singleevents=true&orderby=starttime&sortorder=a&start-min=PREMIER_JOUR&start-max=DERNIER_JOUR</code></p>
+    <pre>http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json&singleevents=true&orderby=starttime&sortorder=a&start-min=PREMIER_JOUR&start-max=DERNIER_JOUR</pre>
 
     <p>Détaillons les arguments :
       <ul>
@@ -507,7 +550,7 @@
     ici correspondent au nombre de résultats affichés en mode normal
     et en mode maximisé.</p>
 
-    <p><code>new Search(container, {length:1, maxLength: 8});</code></p>
+    <pre>new Search(container, {length:1, maxLength: 8});</pre>
 
     <h3>Méthodes de maximisation/minimisation</h3>
 
@@ -539,10 +582,10 @@
       feuille de style.</p>
 
     <pre>
-	 &lt;script src="jquery.js"&gt;&lt;/script&gt;
-	 &lt;script src="jquery-ui.js"&gt;&lt;/script&gt;
-	 &lt;script src="dashboard.js"&gt;&lt;/script&gt;
-	 &lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;
+&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script src="jquery-ui.js"&gt;&lt;/script&gt;
+&lt;script src="dashboard.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;
     </pre>
 
     <p>Les autres fichiers externes, relatifs à chaque modules seront
@@ -579,22 +622,26 @@
       l'identifiant du module (sa clé dans le catalogue), et un hash
       contenant les options qui seront passées à son constructeur.</p>
 
-    <p><code>this.load('Navigation', 'map', {});</code></p>
+    <pre>
+this.load('Navigation', 'map', {});
+    </pre>
 
     <p>On ajoute au prototype de chaque module une liste de
       dépendances pouvant être soit des fichiers Javascript, soit des
       feuilles de style CSS.</p>
 
     <pre>
-      Map.prototype.dependencies = {
-	   scripts: [
-		'jquery.js',
-		'raphael.js'
-	   ],
-	   styles: [
-		'screen.css'
-	   ]
-      };
+Map.prototype.dependencies = {
+
+  scripts: [
+    'jquery.js',
+	 'raphael.js'
+  ],
+
+  styles: [
+    'screen.css'
+  ]
+};
     </pre>
 
     <p>Le dashboard a connaissance, via son catalogue, du nom du script principal de
@@ -608,15 +655,15 @@
     fonction <code>loadScript()</code>, afin de l'instancier.</p>
 
     <pre>
-      Dashboard.prototype.loadScript = function(path) {
+Dashboard.prototype.loadScript = function(path) {
 
-	   var script = document.createElement('script');
-	   script.type= 'text/javascript';
-	   script.src = path;
-	   $('head').append(script);
+  var script = document.createElement('script');
+  script.type= 'text/javascript';
+  script.src = path;
+  $('head').append(script);
 
-	   this.scripts.push(script);
-      }
+  this.scripts.push(script);
+}
     </pre>
 
   </body>
