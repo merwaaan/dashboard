@@ -38,7 +38,7 @@ Search.prototype.search = function(keywords) {
 	// Ajoute une image de chargement.
 	$('<img src="loading.gif" class="loading" alt="Loading..."/>').insertAfter(this.button, this.container);
 
-	var url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=' + encodeURIComponent(keywords);
+	var url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&rsz=8&q=' + encodeURIComponent(keywords);
 
 	$.ajax({
 		url: '/Proxy/get?url=' + encodeURIComponent(url),

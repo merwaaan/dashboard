@@ -17,7 +17,7 @@ import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.algorithm.Dijkstra.Element;
 
-public class Map extends HttpServlet {
+class Map extends HttpServlet {
 
 	private static final long serialVersionUID = 1;
 
