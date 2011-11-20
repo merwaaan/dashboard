@@ -3,6 +3,8 @@ import java.util.Collections;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,21 +28,33 @@ public class Map extends HttpServlet {
 	public Map() {
 
 		this.graph = new DefaultGraph("autoroutes");
+	}
+
+	public void init(ServletConfig config)
+		throws ServletException {
+
+		super.init(config);
 
 		// Charge le fichier DGS contenant le réseau autoroutier.
 		FileSource fs = new FileSourceDGS();
 		fs.addSink(this.graph);
 		try {
-			fs.readAll("autoroutes.dgs");
+
+			// Cherche le chemin absolu du fichier.
+			String absolutePath = getServletContext().getRealPath("/autoroutes.dgs");
+			System.out.println(absolutePath);
+			fs.readAll(absolutePath);
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
+
 	}
 
 	public void doGet( HttpServletRequest req, HttpServletResponse res )
 		throws ServletException, IOException
 	{
+
 		try {
 
 			// Récupère les identifiants des deux villes.
@@ -96,6 +110,8 @@ public class Map extends HttpServlet {
 			res.getWriter().write(sb.toString());
 		}
 		catch(Exception e) {
+
+			System.out.println(e.toString());
 
 			res.setContentType("text/plain");
 			res.setHeader("Cache-Control", "no-cache");
