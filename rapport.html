@@ -10,7 +10,7 @@
       }
 
       body {
-      width: 50%;
+      width: 60%;
       margin: auto;
       padding: 2em;
       color: black;
@@ -18,22 +18,34 @@
       }
 
       h1 {
-      color: #F76842;
+      float: left;
+      margin-bottom: 1.5em;
+      color: grey;
+      }
+
+      h1#author {
+      float: right;
+      font-size: 1.3em;
       }
 
       h2 {
-      color: #C75430;
+      color: #F76842;
       }
 
       h3 {
+      color: #C75430;
+      }
+
+      h4 {
       color: #823722;
       }
 
-      h1, h2, h3 {
+      h2, h3, h4 {
       margin-bottom: 0.5em;
       }
 
       p {
+      clear: both;
       margin-bottom: 1em;
       }
 
@@ -41,6 +53,7 @@
       color: black;
       text-decoration: underline;
       }
+
       li {
       list-style-position: inside;
       }
@@ -49,14 +62,16 @@
       background: #FFF3F0;
       color: #823722;
       font-family: monospace;
+      overflow: auto;
       }
 
       pre {
       margin: 1em;
       padding: 1em;
       }
+
       img {
-      width: 70%;
+      width: 80%;
       display: block;
       margin: auto;
       margin-bottom: 1em;
@@ -67,17 +82,20 @@
   </head>
   <body>
 
-    <h1>Les services</h1>
+    <h1>Dashboard</h1>
+    <h1 id="author">Merwan Achibet</h1>
 
     <p>L'objectif de ce projet est de construire une page web (le
-    dashboard) rassemblant plusieurs services développés
-    indépendemment. On présentera en premier lieu chacun de ces
-    modules puis on détaillera la façon dont ils sont rassemblés sur
-    une même page.</p>
+      dashboard) rassemblant plusieurs services développés
+      indépendemment. On présentera en premier lieu chacun de ces
+      modules puis on détaillera la façon dont ils sont rassemblés sur
+      une même page.</p>
 
-    <h2>Module de navigation</h2>
+    <h2>Les services</h2>
 
-    <h3>Présentation</h3>
+    <h3>Module de navigation</h3>
+
+    <h4>Présentation</h4>
 
     <p>On veut construire une application de visualisation
       cartographique et de navigation inspirée de Google Map. Les fonctionnalités
@@ -87,7 +105,7 @@
       France et y ajouterons ses quatorze plus grandes villes ainsi
       que les autoroutes les reliant.</p>
 
-    <p>On conserve la technique présentée à l'occasion de ce TP. Un
+    <p>On conserve la technique présentée à l'occasion du cours. Un
       bloc interne est utilisé pour contenir toutes les tiles formant
       la carte. Ce dernier est contenu dans un bloc externe faisant
       office de cadre grâce à la règle CSS <code>overflow: hidden</code>. On ajoute
@@ -97,7 +115,7 @@
 
     <img src="map.png"/>
 
-    <h3>Dessin des villes et des itinéraires</h3>
+    <h4>Dessin des villes et des itinéraires</h4>
 
     <p>Afin de pouvoir améliorer l'aspect esthétique de cette
       application, nous allons dessiner nous-mêmes les villes et les itinéraires
@@ -115,24 +133,23 @@
       dans un hash javascript ayant comme identifiants les noms des villes et comme valeurs leurs
       coordonnées normalisées par rapport aux dimensions de notre carte. De cette
       façon, il est plus facile de calculer la position d'une ville
-      sur la carte quelque soit zoom niveau de zoom</p>
+      sur la carte quelque soit le niveau de zoom.</p>
 
     <pre>
-	   this.cities = {
-	     Paris: {x:0.52, y:0.32},
-	     Marseille: {x:0.7, y:0.78},
-	     Lyon: {x:0.67, y:0.59},
-             ...
-	   };
-    </pre>
+this.cities = {
+  Paris: {x:0.52, y:0.32},
+  Marseille: {x:0.7, y:0.78},
+  Lyon: {x:0.67, y:0.59},
+  ...
+};</pre>
 
-    Par exemple, au niveau de zoom 0, la carte a une largeur et une
-    hauteur de 600 pixels, la position de
-    Paris est donc (0.52 * 600, 0.32 * 600), soit (312, 192). Au niveau de zoom 1, la
-    carte complète mesure 1000 pixels de côté, la position de Paris
-    est alors (0.52 * 1000, 0.32 * 1000), soit (520, 520).
+    <p>Par exemple, au niveau de zoom 0, la carte a une largeur et une
+      hauteur de 600 pixels, la position de
+      Paris est donc (0.52 * 600, 0.32 * 600), soit (312, 192). Au niveau de zoom 1, la
+      carte complète mesure 1000 pixels de côté, la position de Paris
+      est alors (0.52 * 1000, 0.32 * 1000), soit (520, 520).</p>
 
-    <h3>Déplacement et zoom</h3>
+    <h4>Déplacement et zoom</h4>
 
     <p>Pour gérer le déplacement sur la carte, on surveille les
       événements de la souris <code>mouseup</code>
@@ -159,7 +176,7 @@
       effacer toutes les tiles présentes et à charger celles du niveau
       inférieur (ou supérieur). Il est important de zoomer vers le centre de la carte
       pour éviter un décalage progressif de la vue vers le haut et la
-      gauche. On doit recalculer la position de la carte à
+      gauche. On doit en fait recalculer la position de la carte à
       chaque zoom de telle façon que le centre de la vue reste
       toujours le même point. Pour ce faire, on a (x, y) les
       coordonnées du point de la carte en haut à gauche de la vue,
@@ -172,7 +189,7 @@
       reste alors qu'à décaler la vue de v<sub>w</sub>/2 vers la
       gauche et de v<sub>h</sub>/2 vers le haut.</p>
 
-    <h3>Calcul d'itinéraire</h3>
+    <h4>Calcul d'itinéraire</h4>
 
     <p>Le calcul d'un itinéraire se fera côté serveur mais il faut
       tout d'abord laisser au client la possibilité de sélectionner son
@@ -184,14 +201,13 @@
       l'occasion. Cette requête contiendra comme arguments les noms
       des deux villes sélectionnées.</p>
 
-    <pre>http://ADRESSE/Map/direction?from=Lille&to=Marseille</pre>
+    <pre>http://ADRESSE/Map/direction?from=Paris&to=Marseille</pre>
 
     <p>La reqûete est ensuite réceptionnée par notre serveur. On utilise la bibliothèque
       Java <a href="http://graphstream-project.org/">Graphstream</a>
       pour représenter notre ensemble de villes ainsi que les routes
       qui les relient. Au démarrage du serveur, un fichier DGS
-      représentant notre modèle est chargé. On peut en voir un
-      extrait :</p>
+      représentant notre modèle est chargé.</p>
 
     <pre>
 DGS004
@@ -202,41 +218,39 @@ an Lyon label:"Lyon"
 ...
 ae A6 Paris Lyon weight:455
 ae A7 Lyon Marseille weight:314
-...
-    </pre>
+...</pre>
 
     <p>La recherche du plus court chemin dans notre réseau est assurée
       par l'implémentation de l'algorithme de Dijkstra dans
       Graphstream. Une fois notre chemin calculé, il faut construire
       une châine de caractères à transmettre au client. Afin qu'elles
-      soient facilement exploitables, on choisit le format JSON. La
+      soit facilement exploitable, on choisit le format JSON. La
       réponse ne contient pas uniquement les noms des villes étapes,
       mais aussi des informations supplémentaires sur les routes
-      arpentées. Un exemple de réponse est visible ci-dessous :</p>
+      arpentées. Un exemple de réponse est visible ci-dessous.</p>
 
     <pre>
 [
   {
-    "city":"Marseille",
-    "route":"A7",
-    "distance":"314"
-  },
-  {
-    "city":"Lyon",
+    "city":"Paris",
     "route":"A6",
     "distance":"455"
   },
   {
-    "city":"Paris"
+    "city":"Lyon",
+    "route":"A7",
+    "distance":"314"
+  },
+  {
+    "city":"Marseille"
   }
-]
-    </pre>
+]</pre>
 
     <p>A la réception de cette réponse, le client dessine le
       tracé de la meilleure route et génère un texte décrivant les
       étapes principales de l'itinéraire calculé.</p>
 
-    <h3>Améliorations possibles</h3>
+    <h4>Améliorations possibles</h4>
 
     <p>Plutôt que de découper nous même nos tiles à partir d'une image
       haute résolution ou vectorielle, il serait avantageux d'utiliser
@@ -246,25 +260,25 @@ ae A7 Lyon Marseille weight:314
       collaborativement. Son interêt principal dans le cadre de ce
       projet est qu'il met à disposition des développeurs un serveur
       permettant d'accéder à n'importe quel tile (de dimension
-      256x256) à partir du moment ou
+      256*256) à partir du moment ou
       l'on connaît sa latitude, sa longitude et son niveau de zoom</p>
 
     <p>En l'état actuel du projet, le client connaît le nom de chaque
       ville ainsi que sa position approximative (pour pouvoir les placer
-      sur la carte). Le serveur connaît quant à lui le nom des villes
+      sur la carte). Le serveur connaît quant à lui les noms des villes
       ainsi que les distances qui les séparent (plus précisément, la
       longueur des routes qui les relient). Il y a ici une
       redondance puisque les noms sont présents à la fois du côté du
       client et du côté du serveur. Il serait envisageable de
       construire une modélisation plus précise du côté serveur : plutôt
       que de ne renseigner que la distance entre les villes, on
-      pourrait aussi enregistrer leur position. Le client n'aura alors
+      pourrait aussi enregistrer leurs coordonnées géographiques. Le client n'aura alors
       pas connaissance des données géographiques jusqu'à ce que le
-      serveur les lui envoie au chargement de sa page.</p>
+      serveur les lui envoie au chargement de la page.</p>
 
-    <h2>Module d'affichage de flux RSS</h2>
+    <h3>Module d'affichage de flux RSS</h3>
 
-    <h3>Présentation</h3>
+    <h4>Présentation</h4>
 
     <p>Le module d'affichage de flux RSS est minimaliste. Son travail est de
       récupérer le canal de syndication du site
@@ -274,7 +288,7 @@ ae A7 Lyon Marseille weight:314
 
     <img src="rss.png"/>
 
-    <h3>Requête</h3>
+    <h4>Requête</h4>
 
     <p>Pour obtenir les informations à partir du site web, on accède
       en théorie directement à l'URL du flux. Il est au format XML et
@@ -286,32 +300,31 @@ ae A7 Lyon Marseille weight:314
       d'application Tomcat, qui servira d'intermédiaire entre le
       client et la source du flux.</p>
 
-    <p>Le proxy reçoit des reqûetes ayant comme argument une URL dont
-    le contenu est à récupérer. Il se connecte directement à l'URL et
-    enregistre son contenu avant de le renvoyer client sous forme de
-    texte. Par exemple, la requête que nous utilisons est</p>
+    <p>Le proxy reçoit des requêtes ayant comme argument une URL dont
+      le contenu est à récupérer. Il se connecte directement à l'URL et
+      lit son contenu avant de le renvoyer au client sous forme de
+      texte. Dans notre cas, la requête sera :</p>
 
-    <pre>http://ADRESSE/Proxy/get&url=http://news.ycombinator.com/rss</pre>
+    <pre>http://ADRESSE/Proxy/get?url=http://news.ycombinator.com/rss</pre>
 
     <p>Une fois que le client a reçu la réponse au format XML, il est
-    nécessaire de la parser pour en extraire le contenu. A cette
-    occasion, on utilise la fonction <code>$.parseXML()</code> de
-    JQuery qui nous permet ensuite d'accéder à toutes les balises par
-    la fonction <code>find()</code> :</p>
+      nécessaire de la parser pour en extraire le contenu. A cette
+      occasion, on utilise la fonction <code>$.parseXML()</code> de
+      JQuery qui nous permet ensuite d'accéder à toutes les balises via
+      l'utilisation de la fonction <code>find()</code>.
 
-    <pre>
+      <pre>
 var xmlDoc = $.parseXML(xml);
 
 $(xmlDoc).find('item').each(function(index, element) {
 
-    var url = $(element).find('link').text();
-    var title = $(element).find('title').text();
+  var url = $(element).find('link').text();
+  var title = $(element).find('title').text();
 
-    this.list.append('&lt;li&gt;&lt;a href="'+link+'"&gt;'+title+'&lt;/a&gt;&lt;/li&gt;);
-}.bind(this));
-    </pre>
+  this.list.append('&lt;li&gt;&lt;a href="'+link+'"&gt;'+title+'&lt;/a&gt;&lt;/li&gt;);
+}.bind(this));</pre>
 
-    <h3>Améliorations possibles</h3>
+      <h4>Améliorations possibles</h4>
 
     <p>Dans l'optique d'améliorer ce service, on peut envisager de
       laisser à l'utilisateur la possibilité de rentrer lui-même
@@ -333,19 +346,19 @@ $(xmlDoc).find('item').each(function(index, element) {
       et d'extraire les adresses pointées par d'éventuelles
       balises <code>&lt;link href="ADRESSE" type="application/rss+xml"/&gt;</code>.</p>
 
-    <h2>Module de recherche d'images</h2>
+    <h3>Module de recherche d'images</h3>
 
-    <h3>Présentation</h3>
+    <h4>Présentation</h4>
 
     <p>On souhaite créer un service permettant d'effectuer une
       recherche d'images sur le web. La présentation reste simple :
-      un champ de texte nous permet d'entrer un ou plusieurs mot-clé, un
-      bouton permet de valider (la touche entrée provoque la même action),
+      un champ de texte nous permet d'entrer un ou plusieurs mots clefs, un
+      bouton permet de valider (la touche entrée provoque la même action)
       et une liste contient les images trouvées.</p>
 
     <img src="search.png"/>
 
-    <h3>Requête</h3>
+    <h4>Requête</h4>
 
     <p>L'API javascript de Google nous propose de nombreuses fonctions
       pour insérer à nos applications ses services de recherche mais
@@ -359,207 +372,222 @@ $(xmlDoc).find('item').each(function(index, element) {
       <ul>
         <li><code>v</code> correspond à la version du protocole</li>
         <li><code>safe</code> correspond au niveau de filtrage du contenu, il peut prendre
-        les valeurs <code>active</code< (modération sévère), <code>moderate</code> (modération
-        normale), <code>off</code> (désactivé)</li>
+          les valeurs <code>active</code> (modération sévère), <code>moderate</code> (modération
+          normale) ou <code>off</code> (désactivé)</li>
         <li><code>rsz</code> correspond au nombre de résultats que l'on souhaite
-        recevoir, le maximum étant 8</li>
-        <li><code>q</code> est une chaîne de caractères encodée contenant le ou les mot-clés à employer</li>
+          recevoir, le maximum étant 8</li>
+        <li><code>q</code> est une chaîne de caractères encodée
+          contenant le ou les mots clef à employer</li>
       </ul>
     </p>
 
     <p>Il sera encore une fois nécessaire d'utiliser notre serveur
       proxy comme intermédiaire puisque les reqûetes inter-domaines
       sont interdites. Le résultat de cet appel est sous forme de
-      JSON.</p>
+      JSON. On y trouve un tableau contenant des hashes Javascript,
+      chacun correspondant à un résultat. Parmi les données dont l'on
+      dispose, on trouve notamment les dimensions de l'images et de sa
+      miniature, l'adresse de l'image ainsi que le titre et l'adresse de la page la
+      contenant.</p>
 
     <pre>
 [
-...
-{
-  "GsearchResultClass":"GimageSearch",
-  "width":"406",
-  "height":"616",
-  "tbWidth":"90",
-  "tbHeight":"136",
-  "url":"http://i.annihil.us/u/prod/marvel//universe3zx/images/2/2e/Gwendeath01.jpg"
-  "titleNoFormatting":"Spider-Man (Peter Parker) - Marvel Universe"
-  "originalContextUrl":"http://marvel.com/universe/Spider-Man_(Peter_Parker)"
-}
-...
-]
-    </pre>
+  ...
+  {
+    "GsearchResultClass":"GimageSearch",
+    "width":"406",
+    "height":"616",
+    "tbWidth":"90",
+    "tbHeight":"136",
+    "url":"http://i.annihil.us/u/prod/marvel//universe3zx/images/2/2e/Gwendeath01.jpg"
+    "titleNoFormatting":"Spider-Man (Peter Parker) - Marvel Universe"
+    "originalContextUrl":"http://marvel.com/universe/Spider-Man_(Peter_Parker)"
+  },
+  ...
+]</pre>
 
-    <p>On en extrait l'adresse de l'image pour pouvoir la charger
-      dans le document, et l'adresse de la page
-      contenant l'image ainsi que son titre pour ajouter un lien
-      hypertexte et une valeur textuelle alternative.</p>
+    <p>une fois ces données extraites, on ajoute les images dans le
+      document à l'intérieur d'un lien hypertexte pointant vers leur
+      source. Le titre de la page est utilisé en tant que texte
+      alternatif à l'image.</p>
 
-    <h3>Améliorations possibles</h3>
+    <h4>Améliorations possibles</h4>
 
     <p>La limitation majeure de cette application est le fait que
-    Google bride les données renvoyées à huit résultats par requête. Pour afficher plus d'images, il
-    serait possible d'utiliser l'argument <code>start=n</code> dans notre requête,
-    o`u <code>n</code> est l'indice du premier résultat. Par exemple si l'on fait
-    une requête de 8 resultats avec <code>start=0</code> puis une autre requête de
-    8 résultats ave <code>start=8</code>, on aura au final 16 résultats
-    successifs. Le désavantage principal de ce contournement est que
-    la limite de requêtes quotidiennes sera plus rapidement atteinte.</p>
+      Google bride les données renvoyées à huit résultats par requête. Pour afficher plus d'images, il
+      serait possible d'utiliser l'argument <code>start=n</code> dans notre requête,
+      où <code>n</code> est l'indice du premier résultat. Par exemple, si l'on fait
+      une requête de 8 resultats avec <code>start=0</code> puis une autre requête de
+      8 résultats ave <code>start=8</code>, on aura au final 16 résultats
+      successifs. Le désavantage principal de ce contournement est que
+      la limite de requêtes quotidiennes sera plus rapidement atteinte.</p>
 
-    <h2>Module d'affichage de calendrier</h2>
+    <h3>Module d'affichage de calendrier</h3>
 
-    <h3>Présentation</h3>
+    <h4>Présentation</h4>
 
     <p>Ce dernier module va communiquer avec le service Google
-    Calendar pour récupérer une liste d'événements se déroulant
-    pendant le mois courant et les afficher à l'utilisateur, à la fois
-    de manière détaillée dans un champ de texte et de manière concise dans un
-    calendrier graphique.</p>
+      Calendar pour récupérer une liste d'événements se déroulant
+      pendant le mois courant et les afficher à l'utilisateur, à la fois
+      de manière détaillée dans un champ de texte et de manière concise dans un
+      calendrier graphique.</p>
 
     <img src="calendar.png"/>
 
-    <h3>Requête</h3>
+    <h4>Requête</h4>
 
     <p>Une fois encore, nous passerons par le serveur proxy pour
-    récupérer des données au format JSON. L'URL à appeler est :</p>
+      récupérer des données au format JSON. L'URL à appeler est :</p>
 
-    <pre>http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json&singleevents=true&orderby=starttime&sortorder=a&start-min=PREMIER_JOUR&start-max=DERNIER_JOUR</pre>
+    <pre>http://www.google.com/calendar/feeds/CALENDRIER/public/full?alt=json&singleevents=true&orderby=starttime&sortorder=a&start-min=PREMIER_JOUR&start-max=DERNIER_JOUR</pre>
 
     <p>Détaillons les arguments :
       <ul>
-        <li><code>developer-calendar</code> est l'identifiant du
-        calendrier dont l'on veut obtenir les données, un vaste
-        éventail est accessible sur Google Calendar</li>
+        <li><code>CALENDRIER</code> est l'identifiant du
+          calendrier dont l'on veut obtenir les données, un vaste
+          éventail est accessible sur Google Calendar et on choisit ici
+          de prendre le calendrier public destiné aux développeurs, <code>developer-calendar@google.com</code></li>
         <li><code>alt</code> est le format de retour des données
-        demandées, ici on choisit du JSON</li>
+          demandées, ici on choisit du JSON</li>
         <li><code>singleevents</code> est un booléen qui limite les
-        résultats aux événements non récurrents s'il vaut vrai</li>
-        <li><code>orderby</code></li> modifie le critère de tri des
-        événement retournés, il peut prendre les
-        valeurs <code>starttime</code> (tri en fonction de la date de l'événement)
-        ou <code>lastmodified</code> (tri en fonction de la date de
-        mise à jour)</li>
+          résultats aux événements non récurrents s'il vaut vrai</li>
+        <li><code>orderby</code> modifie le critère de tri des
+          événement retournés, il peut prendre les
+          valeurs <code>starttime</code> (tri en fonction de la date de l'événement)
+          ou <code>lastmodified</code> (tri en fonction de la date de
+          mise à jour)</li>
         <li><code>sortorder</code> modifie l'ordre de tri, il peut
-        prendre les valeurs <code>a</code> (ascending)
-        ou <code>d</code> (descending)</li>
+          prendre les valeurs <code>a</code> (ascending)
+          ou <code>d</code> (descending)</li>
         <li><code>start-min</code> et <code>start-max</code> sont
-        des dates au format RFC3239 (YYYY-MM-DD) servant de bornes
-        aux événements retournés</li>
+          des dates au format RFC 3239 (YYYY-MM-DD) servant de bornes
+          aux événements retournés</li>
       </ul>
     </p>
 
-    <h3>Interface</h3>
+    <h4>Interface</h4>
 
     <p>Pour améliorer notre interface, nous allons utiliser
-    le widget <a href="http://jqueryui.com/demos/datepicker/">datepicker</a>
-    de JQuery UI. Par défaut, cette fonctionnalité fait apparaître un
-    calendrier lors d'un clic sur un champ de texte pour faciliter la
-    saisie d'une date, on peut néanmoins l'utiliser en mode inline,
-    et l'afficher en permanence. Sont liés à datepicker, deux
-    événements nous intéressant tout particulièrement
-    : <code>onChangeMonthYear</code> et <code>beforeShowDay</code>.</p>
+      le widget <a href="http://jqueryui.com/demos/datepicker/">datepicker</a>
+      de JQuery UI. Par défaut, cette fonctionnalité fait apparaître un
+      calendrier lors d'un clic sur un champ de texte pour faciliter la
+      saisie d'une date, on peut néanmoins l'utiliser en mode inline,
+      et l'afficher en permanence. Sont liés à datepicker, deux
+      événements nous intéressant tout particulièrement
+      : <code>onChangeMonthYear</code> et <code>beforeShowDay</code>.</p>
 
     <p><code>onChangeMonthYear</code> correspond à un changement de
-    mois provoqué par l'utilisateur lors du clic sur une des flèches
-    du calendrier. On associe à cet événement une fonction qui va
-    lancer une nouvelle reqûete afin d'obtenir les événements du mois
-    nouvellement sélectionné. Concrètement, on changera dans la
-    requête les paramètres <code>start-min</code>
-    et <code>start-max</code> pour qu'ils correspondent respectivement
-    au premier et au dernier jour du mois.</p>
+      mois provoqué par l'utilisateur lors du clic sur une des flèches
+      du calendrier. On associe à cet événement une fonction qui va
+      lancer une nouvelle reqûete afin d'obtenir les événements du mois
+      nouvellement sélectionné. Concrètement, on changera dans la
+      requête les paramètres <code>start-min</code>
+      et <code>start-max</code> pour qu'ils correspondent respectivement
+      au premier et au dernier jour du mois.</p>
 
     <p>Le second événement, <code>beforeShowDay</code> correspond au
-    moment ou JQuery UI va dessiner une case du calendrier. La
-    fonction que nous allons y associer vérifiera pour chaque case si
-    un événement existe, et lui attribuera une classe CSS
-    particulière, afin qu'elle soit mise en évidence. On ajoute aussi
-    une bulle de texte contenant le nom de l'événement et qui sera
-    affichée lors du survol de la case par le curseur de
-    l'utilisateur.</p>
+      moment où JQuery UI va dessiner une case du calendrier. La
+      fonction que nous allons y associer vérifiera pour chaque case si
+      un événement existe ce jour là, et lui attribuera une classe CSS
+      particulière afin qu'elle soit mise en évidence. On ajoute aussi
+      une bulle de texte contenant le nom de l'événement et qui sera
+      affichée lors du survol de la case par le curseur de
+      l'utilisateur.</p>
 
     <p>Le calendrier permet de présenter de façon clair l'occupation
-    d'un mois mais le manque de place nous empêche d'afficher des
-    détails importants tels que le lieu de l'événement. Pour pallier
-    ce soucis, nous allons ajouter une version textuelle de ces
-    événements sous le calendrier JQuery.</p>
+      d'un mois mais le manque de place nous empêche d'afficher des
+      détails importants tels que le lieu de l'événement. Pour pallier
+      ce soucis, nous allons ajouter une version textuelle de ces
+      événements sous le calendrier JQuery.</p>
 
-    <h3>Améliorations possibles</h3>
+    <h4>Améliorations possibles</h4>
 
     <p>On remarque que dans la requête que nous utilisons, on se
-    limite aux événements non récurrents afin de ne pas surcharger le
-    calendrier. De plus, même si plusieurs événements sont programmés
-    un même jour, un seul sera visible sur le calendrier. Tous ces
-    problèmes sont liés à un manque d'espace. Pour les résoudre, on
-    pourrait imaginer laisser à l'utilisateur la possibilité de
-    cliquer sur une journée et charger une vue plus précise des
-    événements du jour, heure par heure.</p>
+      limite aux événements non récurrents afin de ne pas surcharger le
+      calendrier. De plus, même si plusieurs événements sont programmés
+      un même jour, un seul sera visible sur le calendrier. Tous ces
+      problèmes sont liés à un manque d'espace. Pour les résoudre, on
+      pourrait imaginer laisser à l'utilisateur la possibilité de
+      cliquer sur une journée et charger une vue plus précise des
+      événements du jour, heure par heure.</p>
 
-    <p>On pourrait aussi imaginer, relier notre module de carte à ce
-    module de calendrier afin de localiser un événement. Il nous
-    faudrait pour cela utiliser le nom du lieu de l'événement
-    concerné, envoyer une requête via l'API de Google Map pour obtenir sa position
-    sattelitaire puis charger les bons tiles dans notre application
-    cartographique grâce à OpenStreetMap.</p>
+    <p>On pourrait aussi imaginer relier notre module de carte à ce
+      module de calendrier afin de localiser un événement. Il nous
+      faudrait pour cela utiliser le nom du lieu de l'événement
+      concerné, envoyer une requête via l'API de Google Map pour obtenir sa position
+      satellite puis charger les bons tiles dans notre application
+      cartographique grâce à OpenStreetMap.</p>
 
-    <h1>Dashboard</h1>
+    <h2>Dashboard</h2>
 
     <p>Maintenant que l'utilisation et le fonctionnement global de chaque
-      module a été briévement détaillé, nous pouvons nous pencher sur
-      la manière dont tous ces modules sont rassemblés sur une
+      module ont été brièvement détaillés, nous pouvons nous pencher sur
+      la manière dont tous ces composants sont rassemblés sur une
       même page, le dashboard.</p>
 
     <img src="dashboard.png"/>
 
-	 <h2>Interface</h2>
+	 <h3>Interface</h3>
 
     <p>Chaque module sera contenu dans un bloc composé de deux
-    parties. Dans l'en-tête d'un bloc apparaît le nom du module qu'il
-    contient ainsi que des boutons de réduction et de
-    maximisation. Dans l'espace principal du bloc, se trouve
-    l'interface du module.</p>
+      parties. Dans l'en-tête d'un bloc apparaît le nom du module qu'il
+      contient ainsi que des boutons de réduction et de
+      maximisation. Dans le corps du bloc se trouve
+      l'interface du module.</p>
 
     <p>Un bloc peut prendre différents états. Il peut être
-    réduit, seul son en-tête sera alors visible. Il peut aussi être
-    maximisé. Dans ce cas, tous les autres modules seront cachés et
-    le bloc du module actif remplira tout l'espace de la page.</p>
+      réduit, seul son en-tête sera alors visible mais il peut aussi être
+      maximisé; dans ce cas, tous les autres modules sont cachés et
+      le bloc du module actif remplit tout l'espace de la
+      page. Pour ce faire, on retire tous les blocs de la page grâce à
+      la fonction JQuery <code>detach()</code>. Il nous faut bien sûr conserver
+      ces éléments en mémoire pour pouvoir, plus tard, remettre la
+      page dans son état initial. On déplace ensuite le bloc à
+      maximiser dans un conteneur spécial qui une fois
+      remplit occupe tout l'espace disponible sur la page. Lors de la
+      séparation entre le module actif et les modules cachés, il faut
+      prendre soin de noter la position sur le dashboard du module actif
+      (par la fonction JQuery <code>index()</code>) de façon à
+      pouvoir le réplacer à sa position originelle par la suite.</p>
 
-    <p>pour gérer le déplacement et la fixation des blocs, on utilise
-    l'interaction <a href="http://jqueryui.com/demos/sortable/">sortable</a>
-    de JQuery UI.</p>
+    <p>pour gérer le déplacement des blocs, on utilise
+      l'interaction <a href="http://jqueryui.com/demos/sortable/">sortable</a>
+      de JQuery UI.</p>
 
-    <h2>Architecture commune</h2>
+    <h3>Architecture commune</h3>
 
     <p>Chacun des modules décrits prend la forme d'une classe
-    Javascript afin d'en faciliter la construction. Par soucis
-    d'homogénéité, ces classes partagent plusieurs
-    charactéristiques.</p>
+      Javascript afin d'en faciliter la construction. Par soucis
+      d'homogénéité, ces classes partagent plusieurs
+      caractéristiques.</p>
 
-    <h3>Instanciation</h3>
+    <h4>Instanciation</h4>
 
     <p>Les signatures des constructeurs de chaque classe sont
       identiques et nécessitent deux arguments :
       <ul>
         <li>Un élément JQuery faisant office de conteneur, le contenu
-        du module sera construit dans ce dernier</li>
+          du module sera construit dans ce dernier</li>
         <li>Un hash Javascript contenant les options à transmettre au module</li>
       </ul>
     </p>
 
     <p>Dans l'exemple ci-dessous, on instancie un module de recherche
-    d'image. Il sera construit à l'intérieur de
-    l'élément <code>container</code>. Les options qu'on lui transmet
-    ici correspondent au nombre de résultats affichés en mode normal
-    et en mode maximisé.</p>
+      d'image. Il sera construit à l'intérieur de
+      l'élément <code>container</code>. Les options qu'on lui transmet
+      correspondent au nombre de résultats affichés en mode normal
+      et en mode maximisé.</p>
 
     <pre>new Search(container, {length:1, maxLength: 8});</pre>
 
-    <h3>Méthodes de maximisation/minimisation</h3>
+    <h4>Méthodes de maximisation/minimisation</h4>
 
     <p>Chaque classe possède deux méthodes <code>onMaximize</code>
       et <code>onMinimize</code> qui sont appelées dés que leur bloc
       est maximisé ou minimisé. On peut ainsi modifier la structure du
       module selon son état. Prenons l'exemple de la carte : en mode
       minimisé, seule une miniature de la carte est visible alors
-      qu'en mode maximisé, la zone est agrandie et une zone de texte
+      qu'en mode maximisé, la zone est agrandie et un bloc de texte
       est ajouté pour afficher la description textuelle de l'itinéraire
       calculé. Pour le module de Flux RSS, on affiche un nombre
       limité d'entrées en mode minimisé alors qu'en mode maximisé
@@ -568,13 +596,13 @@ $(xmlDoc).find('item').each(function(index, element) {
       eux aussi une quantité d'information plus importante en mode
       maximisé.</p>
 
-    <h3>Gestion des dépendances</h3>
+    <h4>Gestion des dépendances</h4>
 
     <p>Dans le cadre de ce projet, nous avons réalisé quatre
       applications différentes mais on voudrait que notre dashboard
       soit capable d'en accueillir de nombreuses autres. Cependant,
       chaque module possède un script principal contenant sa classe,
-      et utilise des scripts utilitaires tels que JQuery ou Raphael et une ou
+      et utilise des scripts utilitaires (JQuery, Raphael, ...) et une ou
       plusieurs feuilles de style CSS. Pour des raisons évidentes de
       propreté, on ne peut pas insérer tous ces contenus externes en
       dur dans la page HTML du dashboard. Au chargement de la page,
@@ -585,46 +613,45 @@ $(xmlDoc).find('item').each(function(index, element) {
 &lt;script src="jquery.js"&gt;&lt;/script&gt;
 &lt;script src="jquery-ui.js"&gt;&lt;/script&gt;
 &lt;script src="dashboard.js"&gt;&lt;/script&gt;
-&lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;
-    </pre>
+&lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;</pre>
 
-    <p>Les autres fichiers externes, relatifs à chaque modules seront
-      chargés dynamiquement à l'instanciation du-dit module. Le
+    <p>Les autres fichiers externes, relatifs à chaque module seront
+      chargés dynamiquement à l'instanciation dudit module. Le
       dashboard (qui est lui aussi un objet Javascript) possède
-      spécialement à cet effet un catalogue des modules
-      disponibles. Ce catalogue comprend le nom de leur répertoire ainsi
+      à cet effet un catalogue des modules
+      disponibles. Ce catalogue comprend le nom de leur répertoire
+      (chaque module est isolé dans un dossier différent) ainsi
       que le nom de leur script principal.</p>
 
     <pre>
-	   this.apps = {
-		map: {
-		dir: '../Map/',
-		js: 'map.js'
-		},
-		rss: {
-		dir: '../RSS/',
-		js: 'rss.js'
-		},
-		search: {
-		dir: '../Search/',
-		js: 'search.js'
-		},
-		calendar: {
-		dir: '../Calendar/',
-		js: 'calendar.js'
-		}
-	   };
-    </pre>
+this.apps = {
+  map: {
+    dir: '../Map/',
+	 js: 'map.js'
+  },
+  rss: {
+    dir: '../RSS/',
+    js: 'rss.js'
+  },
+  search: {
+    dir: '../Search/',
+    js: 'search.js'
+  },
+  calendar: {
+    dir: '../Calendar/',
+    js: 'calendar.js'
+  }
+};</pre>
 
     <p>Pour charger un module dans le dashboard, on appelle la
       fonction <code>load()</code> en lui fournissant comme paramètres le
       titre du module (le texte qui apparaîtra dans l'en-tête de sa boîte),
       l'identifiant du module (sa clé dans le catalogue), et un hash
-      contenant les options qui seront passées à son constructeur.</p>
+      contenant les options qui seront passées à son
+      constructeur. C'est le dashboard qui lui attribuera un nouveau
+      bloc conteneur.</p>
 
-    <pre>
-this.load('Navigation', 'map', {});
-    </pre>
+    <pre>this.load('Navigation', 'map', {});</pre>
 
     <p>On ajoute au prototype de chaque module une liste de
       dépendances pouvant être soit des fichiers Javascript, soit des
@@ -632,27 +659,19 @@ this.load('Navigation', 'map', {});
 
     <pre>
 Map.prototype.dependencies = {
-
-  scripts: [
-    'jquery.js',
-	 'raphael.js'
-  ],
-
-  styles: [
-    'screen.css'
-  ]
-};
-    </pre>
+  scripts: ['jquery.js', 'raphael.js'],
+  styles: ['screen.css']
+ };</pre>
 
     <p>Le dashboard a connaissance, via son catalogue, du nom du script principal de
-    chaque module et peut le charger dans le DOM à l'appel de la
-    fonction <code>load()</code>. Cette fonction travaille en deux
-    étapes, premièrement elle charge le script principal du module (voir
-    la fonction <code>loadScript()</code> ci-dessous). Dés son insertion, ce script est
-    automatiquement évalué par le navigateur et les noms des
-    dépendances qui s'y trouvent sont accessibles. La seconde étape
-    est de charger toutes les dépendances du module, encore une fois avec la
-    fonction <code>loadScript()</code>, afin de l'instancier.</p>
+      chaque module et peut le charger dans le DOM à l'appel de la
+      fonction <code>load()</code>. Cette fonction travaille en deux
+      étapes, premièrement elle charge le script principal du module (voir
+      la fonction <code>loadScript()</code> ci-dessous). Dés son insertion, ce script est
+      automatiquement évalué par le navigateur et les noms des
+      dépendances qui s'y trouvent sont accessibles. La seconde étape
+      est de charger toutes les dépendances du module, encore une fois avec la
+      fonction <code>loadScript()</code>, afin de l'instancier.</p>
 
     <pre>
 Dashboard.prototype.loadScript = function(path) {
@@ -663,8 +682,7 @@ Dashboard.prototype.loadScript = function(path) {
   $('head').append(script);
 
   this.scripts.push(script);
-}
-    </pre>
+}</pre>
 
   </body>
 </html>

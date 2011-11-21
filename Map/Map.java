@@ -72,9 +72,6 @@ public class Map extends HttpServlet {
 			List<Node> nodes = path.getNodePath();
 			List<Edge> edges = path.getEdgePath();
 
-			Collections.reverse(nodes);
-			Collections.reverse(edges);
-
 			// Préparation de la réponse au format JSON.
 			StringBuilder sb = new StringBuilder();
 			sb.append("[");
